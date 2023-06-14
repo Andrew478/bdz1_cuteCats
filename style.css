@@ -1,0 +1,184 @@
+body {
+    font-family: sans-serif; /* Чтобы убрать Times New Roman */
+    margin: 0px;
+}
+
+.container {
+    width: 100%;
+    min-height: 600px;
+    display: grid;
+    grid-template-columns: 200px 200px 200px 200px;
+    grid-gap: 60px;
+    background-color: #1C82AD;
+    color: white;
+}
+.mainContainer {
+    width: 100%;
+    min-height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1C82AD;
+    color: white;
+}
+.card {
+    width: 200px;
+    height: 250px;
+    background-color: #00337C;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 15px;
+
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+
+    overflow: hidden; /* Обрезать всё, что не влезает в класс card (например картинка вылезет) */
+}
+
+/* Называю по БЭМу. 
+Это класс для кастомизации сердечка*/
+.card__fav { 
+    width: 90%;
+    position:relative;
+    text-align: right;
+    cursor: pointer;
+    color: red;
+}
+.card__fav__item {
+    padding-right: 20px;
+}
+.card__image{
+    width: 90%;
+    max-height: max-content;
+    border-radius: 6px;
+}
+/* Внимание! элемент empty из-за позиции на весь экран может перекрывать какие-то кнопки,
+создаваемые на странице. Они будут не реагировать на наведение и казалось не работать.
+А всё потому, что элемент empty всё перекрывает на странице. Надо быть внимательным.*/
+.empty {
+    /* position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-container {
+    position: fixed;
+    background-color: rgba(126, 126, 126, 0.479);
+    backdrop-filter: blur(1px); 
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* display: flex; */
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    background-color:lightblue;
+    padding: 30px;
+    border-radius: 8px;
+    width: calc(100%-60px); /* Записать эту фишку */
+    max-width: 300px; /* Ширина модального окна */
+    max-height: calc(100% - 60px);
+    position: relative;
+}
+
+.modal h2 { /* Это нужно чтобы заголовок "добавить котика" не создавал над собой в модальном окне много пустого пространства */
+    margin-top: 0;
+}
+.modal-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+.modal-close:hover {
+    color: coral;
+}
+.modal form {
+    display: grid;
+    gap: 10px;
+}
+
+input, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    border: 1px solid darkgray;
+    border-radius: 4px;
+    padding: 6px;
+    /* background-color: transparent; */
+}
+
+
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 17px;
+    background-color: #0077FF;
+}
+.header__logo {
+    height: 70px;
+    border-radius: 5px;
+}
+
+header p {
+    color: #FFFFFF;
+    font-size: 30px;
+    font-weight: 600;
+    text-align: center;
+}
+.header__menu {
+    display: flex;
+    align-items: center;
+}
+.header__buttons {
+    color: #FFFFFF;
+    font-size: 17px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 4px;
+}
+.header__buttons:hover {
+    background-color: #00337C;
+}
+
+.test1 {
+    text-align: center;
+}
+footer {
+    position: relative;
+    background-color: #00337C;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+footer p {
+    margin: 0px 100px 0px 100px;
+    padding: 0;
+    color: #FFFFFF;
+    font-size: 17px;
+    font-weight: 600;
+    margin-right: 25px;
+}
+
+.btnAddCat {
+
+}
+.btnUpdatePage {
+    
+}
