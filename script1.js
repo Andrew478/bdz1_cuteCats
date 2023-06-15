@@ -10,6 +10,8 @@
 let user = 'andrewzh';
 let path = `https://cats.petiteweb.dev/api/single/${user}`;
 
+let catsDatabase = []; // сюда мы записываем данные по котам с сервера, отсюда берём данные для создания карточек
+
 let mainBox = document.querySelector('.mainContainer');
 let box = document.querySelector('.container');
 let btnAddCat = document.querySelector(".btnAddCat");
@@ -19,25 +21,29 @@ let modalWindowAddCat = document.querySelector(".modal-container");
 let btnModalWindowClose = document.querySelector(".modal-close");
 let formAddCat = document.forms.formAddCat;
 
+// форма редактирования информации о коте
+let modalWindowEditCat = document.querySelector(".modal-container2");
+let btnModalWindowEditCatClose = document.querySelector(".modal-close2");
+let formEditCat = document.forms.formEditCat;
 
-let cat1 = {
-    id: 1,
-    name: 'Marishka',
-    age: 4,
-    image: 'https://1.bp.blogspot.com/-ozY1SIBfb7E/XeOcKgCF-BI/AAAAAAAAFeE/wyoJ3gyti_MMXNiJarYR1wLmbQ8vsyA_QCEwYBhgL/s1600/020_cats_66.jpg',
-    favorite: false
-};
+// ================== методы работы с catsDataBase
 
-let cat2 = {
-    id: 2,
-    name: 'Шоколад',
-    favorite: true
-};
+function catsDataBaseGetById(id) {
+    /* console.log(`Присланный айди: ${id} имеет тип: ${typeof id} Значение при парсинге: ${parseInt(id)}, тип: ${typeof parseInt(id)}`); */
+    let result = {};
+    for(let i = 0; i < catsDatabase.length; i++) {
+        if(parseInt(catsDatabase[i].id) === parseInt(id)) {
+            /* console.log(`Айди предмета в массиве: ${catsDatabase[i].id}, тип: ${typeof catsDatabase[i].id}. Значение при парсинге: ${parseInt(catsDatabase[i].id)}, тип: ${typeof parseInt(catsDatabase[i].id)}`);
+            console.log(`Присланный id и id текущего объекта равны без парсинга? ${catsDatabase[i].id === id} А с парсингом: ${(parseInt(catsDatabase[i].id) === parseInt(id))}`); */
+            result = catsDatabase[i]; 
+        }
+    }
+   /*  console.log(result); */
+    return result;
+}
 
-let cat3 = {
-    id: 3,
-    favorite: false
-};
+// ================== 
+
 
 /* в методе createCard мы вторым аргументом передаём el - Это элемент, внутри которого отрисовываем card
     по умолчанию мы задаём, что это будет box (удобно конкретно для этого проекта),
@@ -55,7 +61,7 @@ function createCard(cat, el = box) {
     let like = document.createElement('i');
 
     name.innerText = (cat.name) ? cat.name : 'Безымянный кот';
-    age.innerText = (cat.age >= 0) ? `${cat.age} года` : 'Возраст не указан';
+    age.innerText = (cat.age >= 0) ? `Возраст лет: ${cat.age}` : 'Возраст не указан';
     likeContainer.className = 'card__fav';
     deleteButton.className = 'fa-regular fa-trash-can card__fav__item';
     like.className = 'fa-heart';
@@ -64,14 +70,19 @@ function createCard(cat, el = box) {
     image.src = imageSrc;
     image.className = 'card__image';
 
+    // присваиваем айди кота в айди карточки, чтобы понимать чья это карточка в будущем
+    card.setAttribute('id', cat.id);
+
     likeContainer.append(deleteButton, like);
     card.append(image, likeContainer, name, age);
     el.append(card);
 
     deleteButton.addEventListener('click', (e) => {
+        e.stopPropagation();
         deleteCard(cat.id, card);
     });
     like.addEventListener('click', (e) => {
+        e.stopPropagation();
         if(cat.id) {
             fetch(`${path}/update/${cat.id}`, {
                 method: 'PUT',
@@ -87,7 +98,59 @@ function createCard(cat, el = box) {
                 }
             })
         }
-    })
+    });
+    card.addEventListener('click', e => {
+        e.stopPropagation();
+        /* console.log(e.target.getAttribute('id'));
+        console.log(catsDataBaseGetById(4));
+        console.log(catsDataBaseGetById(e.target.getAttribute('id'))); */
+        // наполняем форму данными личного дела кота
+        let id, name, age, image, like, description;
+        
+        let bodyForm = {};
+        bodyForm = catsDataBaseGetById(e.target.getAttribute('id')); 
+
+        /* for(let i = 0; i < formEditCat.elements.length; i++) {
+            let input = formEditCat.elements[i];
+            if(input.name) { // если элемент формы имеет атрибут name (отсортировываем безымянные элементы ненужные, а именно кнопку submit).
+                if(input.type === 'checkbox') { // отлавливаем чекбокс ввиду его специфики работы (с ним нужно по особому)
+                    bodyForm[input.name] = input.checked; // вот так, а не через value считывается значение у checkbox
+                }
+                else {
+                    bodyForm[input.name] = input.value; // отлов значений у обычных элементов типо имя, возраст, рейтинг.
+                }
+            }
+        } */
+
+        id = bodyForm['id'];
+        name  = bodyForm['name'];
+        age = bodyForm['age'];
+        image = bodyForm['image'];
+        like = bodyForm['like'];
+        description = bodyForm['description'];
+
+        /* console.log(`bodyForm[id]: ${bodyForm['id']}, id: ${id}`);
+        console.log(`bodyForm[name]: ${bodyForm['name']}, name: ${name}`);
+        console.log(`bodyForm[description]: ${bodyForm['description']}, description: ${description}`); */
+
+        for(let i = 0; i < formEditCat.elements.length; i++) {
+            let input = formEditCat.elements[i];
+            if(input.name) {
+                if(input.type === 'checkbox') { 
+                    input.checked = like; 
+                }
+                else {
+                    if(input.name === 'id') input.value = id;
+                    else if(input.name === 'name') input.value = name;
+                    else if(input.name === 'age') input.value = age;
+                    else if(input.name === 'image') input.value = image;
+                    else if(input.name === 'description') input.value = description;
+                }
+            }
+        }
+
+        modalWindowEditCat.style.display = 'flex';
+    });
 }
 // удалить кота с сервера
 function deleteCard(id, el) {
@@ -119,8 +182,14 @@ function showCats() {
         } else {
             box.innerHTML = ''; // без этого форма если коты уже имеются будет преумножаться.
             for(let c of data) {
-                createCard(c, box);
+                catsDatabase.push(c);
             }
+            for(let i = 0; i < catsDatabase.length; i++) {
+                createCard(catsDatabase[i], box);
+            }
+            /* for(let c of data) {
+                createCard(c, box);
+            } */
         }
     })
 }
@@ -150,6 +219,11 @@ function chooseIdForNewCat() {
         return newId;
     })
 }
+
+
+btnModalWindowEditCatClose.addEventListener('click', e => {
+    modalWindowEditCat.style.display = 'none';
+});
 
 /* createCard(cat1);
 createCard(cat2);
@@ -195,6 +269,50 @@ formAddCat.addEventListener('submit', e => {
         if(res.ok) { // если ответ от сервера успешный, то не идём дальше, просто заканчиваем этот метод
             formAddCat.reset(); // очищаем форму так как кот уже добавлен
             modalWindowAddCat.style.display = 'none';
+            showCats(); // может заменить на showCats? форма если пустая то empty удалится? Да, проверено. Заменил
+        }
+        else {
+            return res.json();
+        }
+    })
+    .then(err => {
+        if(err && err.message) { // err - проверяем существует ли такой переданный объект, ведь в случае успешного добавления кота мы ничего не передаём
+            alert(err.message);
+        }
+    });
+})
+
+
+formEditCat.addEventListener('submit', e => {
+    e.preventDefault(); // остановить действие по умолчанию (отправка пустой формы)
+    let bodyForm = {}
+
+    for(let i = 0; i < formEditCat.elements.length; i++) {
+        let input = formEditCat.elements[i];
+        /* console.log(input);
+        console.log(input.name);
+        console.log(input.value); */
+
+        if(input.name) { // если элемент формы имеет атрибут name (отсортировываем безымянные элементы ненужные, а именно кнопку submit).
+            if(input.type === 'checkbox') { // отлавливаем чекбокс ввиду его специфики работы (с ним нужно по особому)
+                bodyForm[input.name] = input.checked; // вот так, а не через value считывается значение у checkbox
+            }
+            else {
+                bodyForm[input.name] = input.value; // отлов значений у обычных элементов типо имя, возраст, рейтинг.
+            }
+        }
+        
+    }
+    /* console.log(bodyForm); */
+    fetch(path + `/update/${bodyForm['id']}`, {
+        method: 'PUT',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(bodyForm)
+    })
+    .then(res => {
+        if(res.ok) { // если ответ от сервера успешный, то не идём дальше, просто заканчиваем этот метод
+            formEditCat.reset(); // очищаем форму так как кот уже добавлен
+            modalWindowEditCat.style.display = 'none';
             showCats(); // может заменить на showCats? форма если пустая то empty удалится? Да, проверено. Заменил
         }
         else {

@@ -35,6 +35,8 @@ body {
     flex-direction: column;
 
     overflow: hidden; /* Обрезать всё, что не влезает в класс card (например картинка вылезет) */
+
+    cursor: pointer; /* для открытия карточки личного дела */
 }
 
 /* Называю по БЭМу. 
@@ -50,8 +52,9 @@ body {
     padding-right: 20px;
 }
 .card__image{
-    width: 90%;
-    max-height: max-content;
+    max-width: 90%;
+    /* max-height: max-content; */
+    max-height: 135px;
     border-radius: 6px;
 }
 /* Внимание! элемент empty из-за позиции на весь экран может перекрывать какие-то кнопки,
@@ -120,6 +123,38 @@ input, textarea {
 }
 
 
+.modal-container2 {
+    position: fixed;
+    background-color: rgba(126, 126, 126, 0.479);
+    backdrop-filter: blur(1px); 
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* display: flex; */
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.modal2 {
+    background-color:lightblue;
+    padding: 30px;
+    border-radius: 8px;
+    width: calc(100%-60px); /* Записать эту фишку */
+    max-width: 400px; /* Ширина модального окна */
+    max-height: calc(100% - 60px);
+    position: relative;
+}
+.modal-close2 {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+.modal-close2:hover {
+    color: coral;
+}
 
 header {
     display: flex;

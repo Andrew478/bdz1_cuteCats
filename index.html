@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Котики Андрея</title>
     <link rel="stylesheet" href="style.css">
 
     <!--- Подключение fontawesome (начало)-->
@@ -41,6 +41,26 @@
             <form id="formAddCat">
                 <input type="number" name="id" placeholder="id кота" required>
                 <input type="text" name="name" placeholder="Имя кота" required>
+                <input type="text" name="image" placeholder="Ссылка на изображение">
+                <input type="number" name="age" placeholder="Возраст">
+                <input type="number" name="rate" placeholder="Рейтинг" min="1" max="5">
+                <label>
+                    <input type="checkbox" name="favorite">
+                    Любимчик
+                </label>
+                <textarea name="description" placeholder="Информация о питомце"></textarea>
+                <button type="submit"> Добавить</button>
+            </form>
+        </div>
+    </div>
+    <div class="modal-container2">
+        <div class="modal">
+            <i class="fa-regular fa-circle-xmark modal-close2"></i>
+            <h2>Личное дело</h2>
+            <form id="formEditCat">
+                <input type="number" name="id" placeholder="id кота" required>
+                <input type="text" name="name" placeholder="Имя кота" required>
+                <img class="card__image" src="img/cat-default.jpg">
                 <input type="text" name="image" placeholder="Ссылка на изображение">
                 <input type="number" name="age" placeholder="Возраст">
                 <input type="number" name="rate" placeholder="Рейтинг" min="1" max="5">
