@@ -89,7 +89,7 @@ body {
     background-color:lightblue;
     padding: 30px;
     border-radius: 8px;
-    width: calc(100%-60px); /* Записать эту фишку */
+    width: calc(100% - 60px); /* Записать эту фишку */
     max-width: 300px; /* Ширина модального окна */
     max-height: calc(100% - 60px);
     position: relative;
@@ -122,7 +122,9 @@ input, textarea {
     /* background-color: transparent; */
 }
 
-
+.modal input, .modal textarea {
+    max-width: 300px;
+}
 .modal-container2 {
     position: fixed;
     background-color: rgba(126, 126, 126, 0.479);
@@ -140,10 +142,27 @@ input, textarea {
     background-color:lightblue;
     padding: 30px;
     border-radius: 8px;
-    width: calc(100%-60px); /* Записать эту фишку */
-    max-width: 400px; /* Ширина модального окна */
+    width: calc(100% - 60px); /* Записать эту фишку */
+    max-width: 300px; /* Ширина модального окна */
     max-height: calc(100% - 60px);
     position: relative;
+}
+.modal2 input, .modal2 textarea {
+    max-width: 300px;
+    outline: none;
+    color:grey;
+    background-color: rgb(242, 242, 242);
+}
+.modal2 input:focus, .modal2 textarea:focus {
+    background-color: #FFFFFF;
+    color: black;
+}
+.modal2 h2 { /* Это нужно чтобы заголовок "добавить котика" не создавал над собой в модальном окне много пустого пространства */
+    margin-top: 0;
+}
+.modal2 form {
+    display: grid;
+    gap: 5px;
 }
 .modal-close2 {
     position: absolute;
@@ -155,7 +174,13 @@ input, textarea {
 .modal-close2:hover {
     color: coral;
 }
-
+.modal label {
+    font-size: 14px;
+    margin: 0px;
+}
+.modal-container2 input {
+    margin: 0;
+}
 header {
     display: flex;
     justify-content: space-between;
@@ -211,9 +236,3 @@ footer p {
     margin-right: 25px;
 }
 
-.btnAddCat {
-
-}
-.btnUpdatePage {
-    
-}

@@ -54,22 +54,29 @@
         </div>
     </div>
     <div class="modal-container2">
-        <div class="modal">
+        <div class="modal2">
             <i class="fa-regular fa-circle-xmark modal-close2"></i>
             <h2>Личное дело</h2>
             <form id="formEditCat">
-                <input type="number" name="id" placeholder="id кота" required>
+                <label for="id">id кота</label>
+                <input type="number" name="id" placeholder="id кота" disabled>
+                <label for="name">Имя</label>
                 <input type="text" name="name" placeholder="Имя кота" required>
+                <label>Фото</label>
                 <img class="card__image" src="img/cat-default.jpg">
+                <label for="image">Ссылка на фото</label>
                 <input type="text" name="image" placeholder="Ссылка на изображение">
+                <label for="age">Возраст</label>
                 <input type="number" name="age" placeholder="Возраст">
+                <label for="rate">Рейтинг</label>
                 <input type="number" name="rate" placeholder="Рейтинг" min="1" max="5">
                 <label>
                     <input type="checkbox" name="favorite">
                     Любимчик
                 </label>
+                <label for="description">Описание кота</label>
                 <textarea name="description" placeholder="Информация о питомце"></textarea>
-                <button type="submit"> Добавить</button>
+                <button type="submit">Сохранить изменения</button>
             </form>
         </div>
     </div>
