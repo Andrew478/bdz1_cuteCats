@@ -17,7 +17,14 @@
         <div><P>Котики Андрея</P></div>
         <div class="header__menu">
             <p class="header__buttons btnAddCat">Добавить кота</p>
-            <p class="header__buttons btnUpdatePage">Обновить</p>
+            <div class="header__droprown">
+                <p class="header__buttons" id="btnDropdownSync">Синхронизация</p>
+                <div class="header__droprown__content" id="dropdownSync">
+                    <p class="header__buttons__dropdown" id="btnSyncFromServer">Получить котов с сервера</p>
+                    <p class="header__buttons__dropdown" id="btnSyncToServer">Отправить котов на сервер</p>
+                </div>
+            </div>
+            
         </div>
     </header>
     <section class="mainContainer">
@@ -42,7 +49,7 @@
                 <input type="number" name="id" placeholder="id кота" required>
                 <input type="text" name="name" placeholder="Имя кота" required>
                 <input type="text" name="image" placeholder="Ссылка на изображение">
-                <input type="number" name="age" placeholder="Возраст">
+                <input type="number" name="age" placeholder="Возраст" min="0">
                 <input type="number" name="rate" placeholder="Рейтинг" min="1" max="5">
                 <label>
                     <input type="checkbox" name="favorite">
@@ -67,7 +74,7 @@
                 <label for="image">Ссылка на фото</label>
                 <input type="text" name="image" placeholder="Ссылка на изображение">
                 <label for="age">Возраст</label>
-                <input type="number" name="age" placeholder="Возраст">
+                <input type="number" name="age" placeholder="Возраст" min="0">
                 <label for="rate">Рейтинг</label>
                 <input type="number" name="rate" placeholder="Рейтинг" min="1" max="5">
                 <label>
@@ -80,6 +87,9 @@
             </form>
         </div>
     </div>
-    <script src="script1.js"></script>
+    
+    <script src="db.js"></script>
+    <script src="main.js"></script>
+    <script src="mainScenario.js"></script>
 </body>
 </html>
